@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Anuj 💜</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(to bottom,#e6e6fa,#f3e8ff);
+  overflow:hidden;
+  text-align:center;
+  cursor:none;
+}
+
+/* Sparkle Cursor */
+.sparkle{
+  position:absolute;
+  pointer-events:none;
+  color:#c084fc;
+  animation:fadeOut 1s forwards;
+}
+@keyframes fadeOut{
+  to{opacity:0; transform:translateY(-20px);}
+}
+
+/* Pages */
+.page{
+  display:none;
+  height:100vh;
+  padding-top:60px;
+  animation:fade 1s ease;
+}
+.active{display:block;}
+@keyframes fade{from{opacity:0;} to{opacity:1;}}
+
+/* Loading */
+.loader{
+  font-family:'Dancing Script';
+  font-size:32px;
+  color:#7c3aed;
+  animation:blink 1s infinite alternate;
+}
+@keyframes blink{from{opacity:0.4;} to{opacity:1;}}
+
+/* Calendar */
+.calendar{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:15px;
+}
+.day{
+  width:65px;
+  height:65px;
+  border-radius:15px;
+  background:#d8b4fe;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:0.3s;
+}
+.highlight{
+  background:#8b5cf6;
+  color:white;
+  box-shadow:0 0 15px #c4b5fd;
+}
+.day:hover{transform:scale(1.1);}
+
+/* Envelope */
+.envelope{
+  width:220px;
+  height:140px;
+  background:#c4b5fd;
+  margin:40px auto;
+  position:relative;
+  cursor:pointer;
+  transition:0.5s;
+}
+.envelope:before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  border-left:110px solid transparent;
+  border-right:110px solid transparent;
+  border-bottom:70px solid #a78bfa;
+}
+.open{
+  transform:rotateX(180deg);
+}
+.message{
+  width:80%;
+  margin:auto;
+  font-size:16px;
+  color:#4c1d95;
+  min-height:100px;
+}
+
+/* Ribbon */
+.ribbon{
+  background:#8b5cf6;
+  color:white;
+  padding:12px 30px;
+  border-radius:30px;
+  font-family:'Dancing Script';
+  font-size:28px;
+  box-shadow:0 0 10px #c4b5fd;
+}
+
+/* Photos */
+.photos img{
+  width:130px;
+  border-radius:20px;
+  margin:10px;
+  box-shadow:0 0 15px #ddd6fe;
+}
+
+/* Floating Hearts */
+.heart{
+  position:absolute;
+  color:#a855f7;
+  animation:float 6s linear infinite;
+}
+@keyframes float{
+  from{bottom:-50px; opacity:1;}
+  to{bottom:100%; opacity:0;}
+}
+
+/* Petals */
+.petal{
+  position:absolute;
+  color:#e9d5ff;
+  animation:fall linear infinite;
+}
+@keyframes fall{
+  from{top:-20px;}
+  to{top:100%;}
+}
+
+button{
+  padding:10px 20px;
+  border:none;
+  background:#8b5cf6;
+  color:white;
+  border-radius:20px;
+  margin-top:20px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+  <div class="loader">Loading Something Magical for Anuj 💜</div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+  <h2 style="color:#6d28d9;">February Calendar</h2>
+  <div class="calendar" id="calendar"></div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+  <div class="envelope" id="env"></div>
+  <div class="message" id="msg"></div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="page4">
+  <div class="ribbon">Happy Valentine's Day 💜</div>
+  <div class="photos">
+    <img src="photo1.jpg">
+    <img src="photo2.jpg">
+  </div>
+  <audio id="music" src="romantic.mp3"></audio>
+  <button onclick="nextPage(5)">Next 💕</button>
+</div>
+
+<!-- PAGE 5 -->
+<div class="page" id="page5">
+  <h1 style="font-family:'Dancing Script'; color:#6d28d9; text-shadow:0 0 10px #c4b5fd;">
+    Forever Yours, Anuj 💜
+  </h1>
+</div>
+
+<script>
+
+/* PAGE SWITCH */
+setTimeout(()=>nextPage(2),3000);
+
+function nextPage(num){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById("page"+num).classList.add("active");
+
+  if(num===4){
+    document.getElementById("music").play();
+  }
+
+  if(num===5){
+    setInterval(createHeart,400);
+  }
+}
+
+/* CALENDAR */
+const cal=document.getElementById("calendar");
+for(let i=1;i<=28;i++){
+  let d=document.createElement("div");
+  d.className="day";
+  d.innerText=i;
+  if(i>=7 && i<=14){
+    d.classList.add("highlight");
+    d.onclick=()=>openEnvelope();
+  }
+  cal.appendChild(d);
+}
+
+/* ENVELOPE + TYPING */
+function openEnvelope(){
+  nextPage(3);
+  let env=document.getElementById("env");
+  env.onclick=()=>{
+    env.style.display="none";
+    typeMessage("These seven days made me realize how special you are, Anuj. Your smile feels like peace, your love feels like magic, and your presence feels like home. Thank you for being my happiness and my forever.");
+  }
+}
+
+function typeMessage(text){
+  let i=0;
+  let speed=40;
+  let msg=document.getElementById("msg");
+  msg.innerHTML="";
+  let typing=setInterval(()=>{
+    msg.innerHTML+=text.charAt(i);
+    i++;
+    if(i>=text.length) clearInterval(typing);
+  },speed);
+}
+
+/* Floating Hearts */
+function createHeart(){
+  let heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerText="💜";
+  heart.style.left=Math.random()*100+"%";
+  heart.style.fontSize=(15+Math.random()*20)+"px";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),6000);
+}
+
+/* Sparkle Cursor */
+document.addEventListener("mousemove",function(e){
+  let spark=document.createElement("div");
+  spark.className="sparkle";
+  spark.innerText="✨";
+  spark.style.left=e.pageX+"px";
+  spark.style.top=e.pageY+"px";
+  document.body.appendChild(spark);
+  setTimeout(()=>spark.remove(),1000);
+});
+
+/* Falling Petals */
+setInterval(()=>{
+  let petal=document.createElement("div");
+  petal.className="petal";
+  petal.innerText="🌸";
+  petal.style.left=Math.random()*100+"%";
+  petal.style.animationDuration=(5+Math.random()*5)+"s";
+  document.body.appendChild(petal);
+  setTimeout(()=>petal.remove(),10000);
+},500);
+
+</script>
+
+</body>
+</html>
